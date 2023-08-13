@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Table 2 CSV</title>
+  <script src="https://code.jquery.com/jquery-3.7.0.js"
+    integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+  <style>
+    table {
+      display: flexbox;
+      width: 50rem;
+      height: 20rem;
+      margin-left: auto;
+      margin-right: auto;
+      border: 2px solid green;
+      border-collapse: collapse;
+      text-align: center;
+    }
+
+    input {
+      width: 20rem;
+      height: 2rem;
+      display: flex;
+      margin-left: auto;
+      margin-right: auto;
+      border: 2px solid black;
+    }
+
+    table tr td {
+      align-self: center;
+      align-items: center;
+      border: 2px solid black;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <table id="myid">
+    <thead>
+      <input type="text" name="" placeholder="search by name" id="input" onkeyup="searching()"><br>
+      <tr>
+        <th>Sr.No</th>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Roll No</th>
+      </tr>
+      <!-- Your table content here -->
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Yashpal</td>
+        <td>Telematics</td>
+        <td>2204356</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Atul Kumar</td>
+        <td>BCA</td>
+        <td>220433</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>R.Sharma</td>
+        <td>BSC(CS)</td>
+        <td>2204346</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Manish</td>
+        <td>IOT</td>
+        <td>338829</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Monu</td>
+        <td>Msc.Cs</td>
+        <td>7489</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Arun</td>
+        <td>MCA</td>
+        <td>338829</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Anil</td>
+        <td>M.Com</td>
+        <td>49384</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Sonu</td>
+        <td>BA</td>
+        <td>2434</td>
+      </tr>
+    </tbody>
+  </table>
+  <br><button id="btn">Export data into CSV File</button>
+  <script>
+    function searching() {
+      var table, tr, filter, td, input, i, textvalue;
+      input = document.getElementById("input");
+      filter = input.value.toUpperCase();
+      table = document.getElementById('myid');
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          textvalue = td.innerHTML || td.innerText;
+
+          if (textvalue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+  const btn = document.getElementById("btn");
+  btn.addEventListener("click", function () {
+    const csvContent = [];
+    const tableRows = document.querySelectorAll("#myid tbody tr");
+    
+    tableRows.forEach(function (row) {
+      const rowData = [];
+      row.querySelectorAll("td").forEach(function (cell) {
+        rowData.push(cell.textContent);
+      });
+      csvContent.push(rowData.join(","));
+    });
+
+    const csvString = csvContent.join("\n");
+    const blob = new Blob([csvString], { type: "text/csv" });
+    const link = document.createElement("a");
+    link.download = "table_data.csv";
+    link.href = URL.createObjectURL(blob);
+    link.click();
+  });
+});
+
+
+  </script>
+</body>
+
+</html>

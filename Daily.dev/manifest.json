@@ -1,0 +1,13 @@
+{
+  "name": "daily.dev",
+  "description": "A Chrome extension that brings you the latest tech news and updates from daily.dev.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["script.js"]
+    }
+  ],
+  "permissions": ["tabs"]
+}
